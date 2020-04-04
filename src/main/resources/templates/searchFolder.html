@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>SearchPage</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<link rel="stylesheet" th:href="@{/css/main.css}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+	<form th:action="@{/SortFolder/searchFolder}" method="post" autocomplete="off">
+		<div class="wrapper fadeInDown">
+			<div id="formContent">
+				<div class="fadeIn first">
+					<img th:src="@{/img/searchIcon.png}" id="icon" alt="Search Icon" style="width:56px;height:56px" />
+				</div>
+
+				<input type="text" id="searchParam" class="fadeIn second" name="searchParam"
+					placeholder="搜尋關鍵字">
+				<input type="submit" class="fadeIn fourth" value="搜尋">
+			</div>
+		</div>
+		
+		<table class="table" align="center" style="width:80%">
+  			<thead class="thead-dark">
+			    <tr>
+			      <th scope="col" style="width:10%;text-align:center">順序</th>
+			      <th scope="col" style="width:90%;text-align:center">位置</th>
+			    </tr>
+			  </thead>
+ 			 <tbody>
+			    <tr th:each="name,n : ${conformPath}">
+			      <th scope="row"><button type="button" class="btn btn-success copy">Copy</button></th>
+			      <td class="input_td"><input class="form-control" aria-label="Default" th:value="${name}" /></td>
+			    </tr>
+		 	 </tbody>
+		</table>
+	</form>
+	<script th:inline="javascript">
+		$(".copy").on("click",function(){
+			$(this).parent().next().find("input").val()
+		})
+		$(".input_td input").on("click",function(){
+			copy(this)
+		})
+		
+		function copy(v){
+			v.select();
+			document.execCommand("copy");	
+		}
+	</script>
+</body>
+</html>
